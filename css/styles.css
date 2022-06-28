@@ -3043,18 +3043,18 @@ textarea.form-control-lg {
   border-color: var(--font-white);
 }
 .btn-primary:hover {
-  color: var(--main-pink);
-  background-color: var(--font-white);
+  box-shadow: 0 0 0 0.25rem var(--font-white);
+  color: var(--font-white);
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
-  color: var(--font-white);
-  background-color: var(--main-pink);
+  color: var(--main-pink);
+  background-color: var(--font-white);
   border-color: var(--font-white);
   box-shadow: 0 0 0 0.25rem var(--font-white);
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
-  color: var(--font-white);
-  background-color: var(--main-pink);
+  color: var(--main-pink);
+  background-color: var(--font-white);
   border-color: var(--font-white);
 }
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
