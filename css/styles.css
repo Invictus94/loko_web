@@ -3030,7 +3030,7 @@ textarea.form-control-lg {
 }
 .btn-check:focus + .btn, .btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(41, 55, 240, 0.25);
+  /* box-shadow: 0 0 0 0.25rem var(--font-white); */
 }
 .btn:disabled, .btn.disabled, fieldset:disabled .btn {
   pointer-events: none;
@@ -3050,7 +3050,7 @@ textarea.form-control-lg {
   color: var(--main-pink);
   background-color: var(--font-white);
   border-color: var(--font-white);
-  box-shadow: 0 0 0 0.25rem var(--font-white);
+  /* box-shadow: 0 0 0 0.25rem var(--font-white); */
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
   color: var(--main-pink);

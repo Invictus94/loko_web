@@ -23,11 +23,13 @@ window.addEventListener('DOMContentLoaded', event => {
 
     navbarToggler.addEventListener('click', () => {
         if (navbarToggler.classList.contains('collapsed')) {
-            navbarToggler.style.boxShadow = "";
+            navbarToggler.style.backgroundColor = 'transparent';
+            navbarToggler.style.color = 'var(--font-white)';
         }
         else
         {
-            navbarToggler.style.boxShadow = '0 0 0 0.25rem';
+            navbarToggler.style.backgroundColor = 'var(--font-white)';
+            navbarToggler.style.color = 'var(--main-pink)';
         }
     });
 
