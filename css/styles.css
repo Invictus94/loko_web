@@ -15,6 +15,7 @@
   --main-pink: #961F88;
   --main-dark-purple: #430134;
   --main-dark: #140711;
+  --font-white-rgb: 237, 231, 239;
   --font-white: #EDE7EF;
   --hor-gradient: linear-gradient(to right, var(--main-purple), var(--main-pink) 40%);
   --ver-gradient: linear-gradient(var(--main-dark-purple), var(--main-dark));
@@ -96,13 +97,13 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-hr {
+/* hr {
   margin: 1rem 0;
   color: inherit;
   background-color: currentColor;
   border: 0;
   opacity: 0.25;
-}
+} */
 
 hr:not([size]) {
   height: 1px;
@@ -424,6 +425,14 @@ legend {
 }
 legend + * {
   clear: left;
+}
+
+hr {
+  margin: 0 auto;
+  width: 60%;
+  height: 1px;
+  border: 0;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(var(--font-white-rgb), 0.75), rgba(255, 255, 255, 0));
 }
 
 ::-webkit-datetime-edit-fields-wrapper,
@@ -7785,7 +7794,7 @@ textarea.form-control-lg {
 
 .text-white {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+  color: rgba(var(--font-white), var(--bs-text-opacity)) !important;
 }
 
 .text-body {
@@ -11329,7 +11338,7 @@ html {
 }
 
 .bg-gradient-primary-to-secondary {
-  background: linear-gradient(45deg, #2937f0, #9f1ae2) !important;
+  background-image: var(--hor-gradient) !important;
 }
 
 .font-alt {
