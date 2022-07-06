@@ -12,6 +12,7 @@
  */
 :root {
   --main-purple: #541D6F;
+  --main-pink-panther: #C282C2;
   --main-pink: #961F88;
   --main-dark-purple: #430134;
   --main-dark: #140711;
@@ -11346,7 +11347,7 @@ html {
 }
 
 .text-gradient {
-  background: -webkit-linear-gradient(#2937f0, #9f1ae2);
+  background: -webkit-linear-gradient(var(--main-pink-panther), var(--main-pink));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
