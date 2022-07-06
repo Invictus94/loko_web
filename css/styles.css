@@ -510,6 +510,16 @@ progress {
   font-weight: 300;
 }
 
+#app_info {
+  text-align: justify;
+}
+
+@media (min-width: 768px) {
+  #app_info {
+    text-align: left;
+  }
+}
+
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
   font-weight: 300;
