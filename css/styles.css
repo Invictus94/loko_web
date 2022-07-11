@@ -11678,3 +11678,40 @@ footer a:hover, footer a:active, footer a:focus {
     max-width: 17rem;
   }
 }
+
+.img-review {
+  border-radius: 50%;
+  height: 105px;
+  width: 105px;
+  margin: auto;
+}
+
+.card-review {
+  border: 0px;
+  background-color: transparent;
+}
+
+.card-review::after {
+  content: "";
+  background-image: var(--hor-gradient);
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+  border-radius: 30px 30px 30px 0px;
+}
+
+.card-review-text::before {
+  content: open-quote;
+}
+.card-review-text::after {
+  content: close-quote;
+}
+
+.card-text {
+  font-size: 12px;
+  text-align: right;
+}
