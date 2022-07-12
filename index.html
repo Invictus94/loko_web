@@ -370,7 +370,7 @@
     <!-- an error submitting the form-->
     <!-- <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div> -->
     <!-- Submit Button-->
-    <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg" id="submitButton" type="submit">Submit</button></div>
+    <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg" id="submitButton" type="submit" onclick="sendMail()">Submit</button></div>
                         </form>
                     </div>
                 </div>
@@ -385,6 +385,7 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 </body>
 
 </html>

@@ -45,3 +45,17 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+// async function sendMail(name, email, subject, text, element)
+async function sendMail()
+{
+    return await Email.send({
+        SecureToken : "669df764-f746-4f5b-8b7e-c959be2b7cd7",
+        To : "viktoreeeee@gmail.com",
+        From : "viktoreeeee@gmail.com",
+        Subject : `test salje poruku => tema test`,
+        Body : `poruka: test <br/> test-ov Mail je : test`
+    }).then(
+      message => alert(message)
+    );
+}
