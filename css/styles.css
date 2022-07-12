@@ -11715,3 +11715,13 @@ footer a:hover, footer a:active, footer a:focus {
   font-size: 12px;
   text-align: right;
 }
+
+.hidden-767 {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hidden-767 {
+    display: initial;
+  }
+}
