@@ -51,12 +51,12 @@ window.addEventListener('DOMContentLoaded', event => {
 
                 $.getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}`, function(data) {
 
-                    console.log("City: ", `${data["address"]["city"]}`)
-                    console.log("State: ", `${data["address"]["state"]}`)
-                    console.log("Country: ", `${data["address"]["country"]}`)
+                    console.log("Grad: ", `${data["address"]["city"]}`)
+                    console.log("Regija: ", `${data["address"]["state"]}`)
+                    console.log("Drzava: ", `${data["address"]["country"]}`)
 
                     var desc = document.getElementById("masthead-desc");
-                    desc.innerHTML = `City: ${data["address"]["city"]}<br/>State: ${data["address"]["state"]}<br/>Country: ${data["address"]["country"]}`;
+                    desc.innerHTML = `Grad: ${data["address"]["city"]}<br/>Regija: ${data["address"]["state"]}<br/>Drzava: ${data["address"]["country"]}`;
                 });
 
             });
