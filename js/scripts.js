@@ -43,6 +43,24 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
+    if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(position => {
+                // console.log("latitude: ", `${position.coords.latitude}`)
+                // console.log("longitude: ", `${position.coords.longitude}`)
+
+                $.getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}`, function(data) {
+
+                    console.log("City: ", `${data["address"]["city"]}`)
+                    console.log("State: ", `${data["address"]["state"]}`)
+                    console.log("Country: ", `${data["address"]["country"]}`)
+
+                    alert(`City: ${data["address"]["city"]}\nState: ${data["address"]["state"]}\nCountry: ${data["address"]["country"]}`);
+                });
+
+            });
+    }
+
 });
 
 function submitForm() {
