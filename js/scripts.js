@@ -55,7 +55,8 @@ window.addEventListener('DOMContentLoaded', event => {
                     console.log("State: ", `${data["address"]["state"]}`)
                     console.log("Country: ", `${data["address"]["country"]}`)
 
-                    alert(`City: ${data["address"]["city"]}\nState: ${data["address"]["state"]}\nCountry: ${data["address"]["country"]}`);
+                    var desc = document.getElementById("masthead-desc");
+                    desc.innerHTML = `City: ${data["address"]["city"]}<br/>State: ${data["address"]["state"]}<br/>Country: ${data["address"]["country"]}`;
                 });
 
             });
