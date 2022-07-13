@@ -101,6 +101,9 @@ function feedbackModal() {
         body.style.overflow = 'initial'
         feedbackModal.classList.add("d-none");
         modalShade.classList.add("d-none");
+
+        const navbarToggler = document.body.querySelector('.navbar-toggler');
+        navbarToggler.click();
     }
     else
     {
