@@ -38,8 +38,7 @@
                     <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Features</a></li>
                     <li class="nav-item"><a class="nav-link me-lg-3" href="#download">Download</a></li>
                 </ul>
-                <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
-                    data-bs-target="#feedbackModal">
+                <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" onclick="feedbackModal()">
                     <span class="d-flex align-items-center">
                         <i class="bi-chat-text-fill me-2"></i>
                         <span class="small">Send Feedback</span>
@@ -311,12 +310,13 @@
         </footer>
 
     <!-- Feedback Modal-->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal fade show d-none" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true" style="display: block;" role="dialog">
+
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-gradient-primary-to-secondary p-4">
                         <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Send feedback</h5>
-                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="feedbackModal()"></button>
                     </div>
                     <div class="modal-body border-0 p-4">
     <!-- * * * * * * * * * * * * * * *-->
@@ -326,7 +326,7 @@
     <!-- To make this form functional, sign up at-->
     <!-- https://startbootstrap.com/solution/contact-forms-->
     <!-- to get an API token!-->
-    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+    <form id="contactForm">
     <!-- Name input-->
     <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
@@ -357,7 +357,7 @@
     <!-- This is what your users will see when the form-->
     <!-- has successfully submitted-->
     <!-- <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
+                                <div class="text-center mb-3 text-danger">
                                     <div class="fw-bolder">Form submission successful!</div>
                                     To activate this form, sign up at
                                     <br />
@@ -368,9 +368,9 @@
     <!---->
     <!-- This is what your users will see when there is-->
     <!-- an error submitting the form-->
-    <!-- <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div> -->
+    <!-- <div class="d-none"><div class="text-center mb-3" id="submitMessage">Error sending message!</div></div> -->
     <!-- Submit Button-->
-    <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg" id="submitButton" type="submit" onclick="sendMail()">Submit</button></div>
+    <div class="d-grid"><a class="btn btn-primary rounded-pill btn-lg" id="submitButton" onclick="submitForm()">Submit</a></div>
                         </form>
                     </div>
                 </div>
@@ -384,8 +384,9 @@
     <!-- * *                               SB Forms JS                               * *-->
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
     <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <div id="modalShade" class="modal-backdrop fade show d-none"></div>
 </body>
 
 </html>

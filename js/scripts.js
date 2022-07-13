@@ -26,8 +26,7 @@ window.addEventListener('DOMContentLoaded', event => {
             navbarToggler.style.backgroundColor = 'transparent';
             navbarToggler.style.color = 'var(--font-white)';
         }
-        else
-        {
+        else {
             navbarToggler.style.backgroundColor = 'var(--font-white)';
             navbarToggler.style.color = 'var(--main-pink)';
         }
@@ -46,16 +45,67 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-// async function sendMail(name, email, subject, text, element)
-async function sendMail()
-{
+function submitForm() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var message = document.getElementById("message").value;
+
+    if (name != "" && email != "" && phone != "" && message != "") {
+
+        var element = document.getElementById("submitButton");
+        element.innerHTML = "sending!"
+        element.style.backgroundColor = 'orange';
+
+        var result = sendMail(name, email, phone, message);
+        result.then( resultValue => {
+            if (resultValue == "OK") {
+                element.innerHTML = "Poslano!"
+                element.style.backgroundColor = 'green';
+                element.onclick = function () {
+                    feedbackModal()
+                };
+            }
+            else {
+                // element.innerHTML = resultValue;
+                alert("Greska prilikom slanja poruke, kontaktirajte nas putem mail 123@info.loko!");
+                element.innerHTML = "Submit"
+                element.style.backgroundColor = 'var(--main-pink)';
+            }
+        });
+    }
+    else {
+        //   alert(translate("check_fields"));
+        alert("Popunite sva polja!");
+    };
+}
+
+async function sendMail(name, email, phone, message) {
     return await Email.send({
-        SecureToken : "669df764-f746-4f5b-8b7e-c959be2b7cd7",
-        To : "viktoreeeee@gmail.com",
-        From : "viktoreeeee@gmail.com",
-        Subject : `test salje poruku => tema test`,
-        Body : `poruka: test <br/> test-ov Mail je : test`
-    }).then(
-      message => alert(message)
-    );
+        SecureToken: "669df764-f746-4f5b-8b7e-c959be2b7cd7",
+        To: "viktoreeeee@gmail.com",
+        From: "viktoreeeee@gmail.com",
+        Subject: `${name} salje poruku`,
+        Body: `poruka: ${message} <br/> ${name}-ov Mail je: ${email} <br/> Kontakt: ${phone}`
+    });
+}
+
+function feedbackModal() {
+
+    var body = document.getElementById("page-top");
+    var feedbackModal = document.getElementById("feedbackModal");
+    var modalShade = document.getElementById("modalShade");
+
+    if(body.style.overflow == 'hidden')
+    {
+        body.style.overflow = 'initial'
+        feedbackModal.classList.add("d-none");
+        modalShade.classList.add("d-none");
+    }
+    else
+    {
+        body.style.overflow = 'hidden'
+        feedbackModal.classList.remove("d-none");
+        modalShade.classList.remove("d-none");
+    }
 }
