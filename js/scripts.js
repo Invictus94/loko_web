@@ -43,24 +43,36 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    if (navigator.geolocation) {
+    
+    $.getJSON(`https://geolocation-db.com/json/`, function (data) {
 
-            navigator.geolocation.getCurrentPosition(position => {
-                // console.log("latitude: ", `${position.coords.latitude}`)
-                // console.log("longitude: ", `${position.coords.longitude}`)
+        console.log("Grad u blizini: ", `${data["city"]}`)
+        console.log("Regija: ", `${data["state"]}`)
+        console.log("Drzava: ", `${data["country_name"]}`)
 
-                $.getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}`, function(data) {
+        var desc = document.getElementById("masthead-desc");
+        desc.innerHTML = `Grad u blizini: ${data["city"]}<br/>Regija: ${data["state"]}<br/>Drzava: ${data["country_name"]}`;
+    });
 
-                    console.log("Grad: ", `${data["address"]["city"]}`)
-                    console.log("Regija: ", `${data["address"]["state"]}`)
-                    console.log("Drzava: ", `${data["address"]["country"]}`)
+    //potrebno dopustenje korisnika
+    // if (navigator.geolocation) {
 
-                    var desc = document.getElementById("masthead-desc");
-                    desc.innerHTML = `Grad: ${data["address"]["city"]}<br/>Regija: ${data["address"]["state"]}<br/>Drzava: ${data["address"]["country"]}`;
-                });
+    //         navigator.geolocation.getCurrentPosition(position => {
+    //             // console.log("latitude: ", `${position.coords.latitude}`)
+    //             // console.log("longitude: ", `${position.coords.longitude}`)
 
-            });
-    }
+    //             $.getJSON(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}`, function(data) {
+
+    //                 console.log("Grad: ", `${data["address"]["city"]}`)
+    //                 console.log("Regija: ", `${data["address"]["state"]}`)
+    //                 console.log("Drzava: ", `${data["address"]["country"]}`)
+
+    //                 var desc = document.getElementById("masthead-desc");
+    //                 desc.innerHTML = `Grad: ${data["address"]["city"]}<br/>Regija: ${data["address"]["state"]}<br/>Drzava: ${data["address"]["country"]}`;
+    //             });
+
+    //         });
+    // }
 
 });
 
