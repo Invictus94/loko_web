@@ -7,7 +7,7 @@
 // Scripts
 // 
 import { Location } from './classes/location.js';
-import { tryWrite } from './index.html';
+import { tryWrite } from './firebase/init.js';
 
 window.addEventListener('DOMContentLoaded', event => {
 
