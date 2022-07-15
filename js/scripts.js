@@ -6,6 +6,7 @@
 //
 // Scripts
 // 
+import { Location } from './classes/location.js';
 
 window.addEventListener('DOMContentLoaded', event => {
 
@@ -74,6 +75,7 @@ window.addEventListener('DOMContentLoaded', event => {
     //         });
     // }
 
+    tryWrite(new Location("Bosnia", "Tuzla", "Sarajevo"));
 });
 
 function submitForm() {
