@@ -7,6 +7,7 @@
 // Scripts
 // 
 import { Location } from './classes/location.js';
+import { tryWrite } from './index.html';
 
 window.addEventListener('DOMContentLoaded', event => {
 
