@@ -48,12 +48,13 @@ window.addEventListener('DOMContentLoaded', event => {
     
     $.getJSON(`https://geolocation-db.com/json/`, function (data) {
 
-        console.log("Grad u blizini: ", `${data["city"]}`)
-        console.log("Regija: ", `${data["state"]}`)
-        console.log("Drzava: ", `${data["country_name"]}`)
+        // console.log("Grad u blizini: ", `${data["city"]}`)
+        // console.log("Regija: ", `${data["state"]}`)
+        // console.log("Drzava: ", `${data["country_name"]}`)
+        tryWrite(new Location(data["country_name"], data["state"], data["city"]));
 
         var desc = document.getElementById("masthead-desc");
-        desc.innerHTML = `Grad u blizini: ${data["city"]}<br/>Regija: ${data["state"]}<br/>Drzava: ${data["country_name"]}`;
+        desc.innerHTML = `Grad u blizini: ${data["city"]} - Regija: ${data["state"]} - Drzava: ${data["country_name"]}`;
     });
 
     //potrebno dopustenje korisnika
@@ -76,7 +77,6 @@ window.addEventListener('DOMContentLoaded', event => {
     //         });
     // }
 
-    tryWrite(new Location("Svedska", "Ankara", "Istanbul"));
 });
 
 function submitForm() {
