@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', event => {
     //         });
     // }
 
-    tryWrite(new Location("Bosnia", "Tuzla", "Sarajevo"));
+    tryWrite(new Location("Svedska", "Ankara", "Istanbul"));
 });
 
 function submitForm() {
