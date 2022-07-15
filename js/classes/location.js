@@ -4,7 +4,4 @@ export class Location {
         this.state = state;
         this.country = country;
     }
-    // toString() {
-    //     return this.city + ', ' + this.state + ', ' + this.country;
-    // }
 }

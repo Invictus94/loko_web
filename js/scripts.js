@@ -1,27 +1,46 @@
-/*!
-* Start Bootstrap - New Age v6.0.6 (https://startbootstrap.com/theme/new-age)
-* Copyright 2013-2022 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-new-age/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
 import { Location } from './classes/location.js';
-import { tryWrite } from './firebase/init.js';
+import { tryWrite, translatePage } from './firebase/init.js';
+
+//prijevod
+
+document.documentElement.lang = navigator.language || navigator.userLanguage;
+
+var shortBrowserLang = document.documentElement.lang.substr(0, 2);
+
+if(shortBrowserLang != "en" && shortBrowserLang != "de" && shortBrowserLang != "hr")
+{
+    document.documentElement.lang = "en";
+    shortBrowserLang = "en"
+}
+
+translatePage(shortBrowserLang)
+
 
 window.addEventListener('DOMContentLoaded', event => {
 
+    const mainDiv = document.getElementById("page-top");
+
+    //set btns clicks
+    const feedback_btn_open = document.getElementById("open-feedback-btn");
+    feedback_btn_open.addEventListener('click', () => feedbackModal());
+
+    const feedback_btn_close = document.getElementById("close-feedback-btn");
+    feedback_btn_close.addEventListener('click', () => feedbackModal());
+
+    const submitButton = document.getElementById("submitButton");
+    submitButton.addEventListener('click', () => submitForm());
+    
     // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
+    const mainNav = mainDiv.querySelector('#mainNav');
     if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
+        new bootstrap.ScrollSpy(mainDiv, {
             target: '#mainNav',
             offset: 74,
         });
     };
 
     // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
+    const navbarToggler = mainDiv.querySelector('.navbar-toggler');
 
     navbarToggler.addEventListener('click', () => {
         if (navbarToggler.classList.contains('collapsed')) {
@@ -45,16 +64,14 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    
+    //lokacija
+
     $.getJSON(`https://geolocation-db.com/json/`, function (data) {
 
-        // console.log("Grad u blizini: ", `${data["city"]}`)
-        // console.log("Regija: ", `${data["state"]}`)
-        // console.log("Drzava: ", `${data["country_name"]}`)
         tryWrite(new Location(data["country_name"], data["state"], data["city"]));
 
         var desc = document.getElementById("masthead-desc");
-        desc.innerHTML = `Grad u blizini: ${data["city"]} - Regija: ${data["state"]} - Drzava: ${data["country_name"]}`;
+        desc.innerHTML = `Grad u blizini: ${data["city"]} - Regija: ${data["state"]}<br/>Drzava: ${data["country_name"]}`;
     });
 
     //potrebno dopustenje korisnika
@@ -101,7 +118,6 @@ function submitForm() {
                 };
             }
             else {
-                // element.innerHTML = resultValue;
                 alert("Greska prilikom slanja poruke, kontaktirajte nas putem mail 123@info.loko!");
                 element.innerHTML = "Submit"
                 element.style.backgroundColor = 'var(--main-pink)';
@@ -109,7 +125,6 @@ function submitForm() {
         });
     }
     else {
-        //   alert(translate("check_fields"));
         alert("Popunite sva polja!");
     };
 }
@@ -126,7 +141,7 @@ async function sendMail(name, email, phone, message) {
 
 function feedbackModal() {
 
-    var body = document.getElementById("page-top");
+    var body = document.body;
     var feedbackModal = document.getElementById("feedbackModal");
     var modalShade = document.getElementById("modalShade");
 
@@ -137,7 +152,9 @@ function feedbackModal() {
         modalShade.classList.add("d-none");
 
         const navbarToggler = document.body.querySelector('.navbar-toggler');
-        navbarToggler.click();
+
+        if(navbarToggler.getAttribute('aria-expanded') == "true")
+            navbarToggler.click();
     }
     else
     {

@@ -1,14 +1,8 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
 import { doc, getDoc, getFirestore, setDoc } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
 
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-
-// Your web app's Firebase configuration
 
 const firebaseConfig = {
 
@@ -25,34 +19,6 @@ const firebaseConfig = {
     appId: "1:898595369354:web:9fb2147d799940a0e89873"
 
 };
-
-//   class Location {
-//     constructor (country, state, city) {
-//         this.city = city;
-//         this.state = state;
-//         this.country = country;
-//     }
-//     // toString() {
-//     //     return this.city + ', ' + this.state + ', ' + this.country;
-//     // }
-// }
-
-// Firestore data converter
-// const locationConverter = {
-//     toFirestore: (location) => {
-//         return {
-//             city: location.city,
-//             state: location.state,
-//             country: location.country
-//             };
-//     },
-//     fromFirestore: (snapshot, options) => {
-//         const data = snapshot.data(options);
-//         return new Location(data.city, data.state, data.country);
-//     }
-// };
-
-// Initialize Firebase
 
 const app = initializeApp(firebaseConfig);
 
@@ -71,47 +37,21 @@ async function writeIntoDB(ref) {
         });
     }
 }
-// Initialize Firebase
 
 export function tryWrite(drzava) {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, 'admin@loko.com', '260294')
         .then(async (userCredential) => {
+
             // Signed in 
 
             const db = getFirestore(app);
 
-            //GET
+            writeIntoDB(doc(db, "views", drzava.country));
+            writeIntoDB(doc(db, "views", drzava.country, "regije", drzava.state));
+            writeIntoDB(doc(db, "views", drzava.country, "regije", drzava.state, "gradovi", drzava.city));
 
-            // const docRef = doc(db, "test", "260294");
-            // const docSnap = await getDoc(docRef);
-
-            // if (docSnap.exists()) {
-            //   console.log("Document data:", docSnap.data());
-            //   //let element = document.getElementById('test')
-            // } else {
-            //   // doc.data() will be undefined in this case
-            //   console.log("No such document!");
-            // }
-
-
-            //SET
-            //const drzava = new Location("Bosnia", "Tuzla", "Sarajevo");
-
-            //.withConverter(locationConverter);
-
-            writeIntoDB(doc(db, "drzave", drzava.country));
-            writeIntoDB(doc(db, "drzave", drzava.country, "regije", drzava.state));
-            writeIntoDB(doc(db, "drzave", drzava.country, "regije", drzava.state, "gradovi", drzava.city));
-
-            console.log('db_write_ok');
-
-            // await setDoc(ref, {
-            //             clicks: 1
-            //             });
-
-
-
+            console.log('db_w_ok');
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -122,3 +62,52 @@ export function tryWrite(drzava) {
 
         });
 }
+
+export async function translatePage(shortBrowserLang) {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, 'admin@loko.com', '260294')
+        .then(async (userCredential) => {
+
+            // Signed in 
+            const db = getFirestore(app);
+
+            document.getElementById('page-top').classList.add("d-none");
+
+            const docRef = doc(db, 'dictionary', shortBrowserLang);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+
+                let json = docSnap.data();
+
+                Object.keys(json).forEach((key) => {
+                  
+                  document.getElementById(key).innerHTML = json[key];
+
+                });
+
+                document.getElementById('page-top').classList.remove("d-none");
+
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+
+            console.log('db_tr_ok');
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.log(errorCode);
+            console.log(errorMessage);
+
+        });
+}
+
+
+
+
+
+
+
