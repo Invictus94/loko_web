@@ -11,6 +11,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  --slide-left-duration: 1s;
+
   --main-purple: #541D6F;
   --main-pink-panther: #C282C2;
   --main-pink: #961F88;
@@ -6723,8 +6725,12 @@ textarea.form-control-lg {
   opacity: 0.25 !important;
 }
 
-.opacity-50 {
+.opacity-50-imp {
   opacity: 0.5 !important;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .opacity-75 {
@@ -11723,4 +11729,39 @@ footer a:hover, footer a:active, footer a:focus {
   .hidden-767 {
     display: initial;
   }
+}
+
+.slide-left-disappear {
+  animation: slide-left-disappear var(--slide-left-duration) forwards;
+  -webkit-animation: slide-left-disappear var(--slide-left-duration) forwards;
+}
+  
+@keyframes slide-left-disappear {
+  0% { transform: translateX(0%); opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0.5; }
+}
+
+@-webkit-keyframes slide-left-disappear {
+  0% { -webkit-transform: translateX(0%); opacity: 1; }
+  100% { -webkit-transform: translateX(-100%); opacity: 0.5; }
+}
+
+.slide-left-appear {
+  animation: slide-left-appear var(--slide-left-duration) forwards;
+  -webkit-animation: slide-left-appear var(--slide-left-duration) forwards;
+}
+  
+@keyframes slide-left-appear {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); opacity: 1; }
+}
+
+@-webkit-keyframes slide-left-appear {
+  0% { -webkit-transform: translateX(0%); }
+  100% { -webkit-transform: translateX(-100%); opacity: 1; }
+}
+
+.move-right {
+  transform: translateX(200%);
+  -webkit-transform: translateX(200%);
 }

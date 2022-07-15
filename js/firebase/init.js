@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
-import { doc, getDoc, getFirestore, setDoc } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
+import { doc, getDoc, getFirestore, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js";
+
+export let reviews = {}
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +23,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 async function writeIntoDB(ref) {
     const docSnap = await getDoc(ref);
@@ -63,13 +66,12 @@ export function tryWrite(drzava) {
         });
 }
 
-export async function translatePage(shortBrowserLang) {
+export function translatePage(shortBrowserLang) {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, 'admin@loko.com', '260294')
         .then(async (userCredential) => {
 
             // Signed in 
-            const db = getFirestore(app);
 
             document.getElementById('page-top').classList.add("d-none");
 
@@ -93,6 +95,8 @@ export async function translatePage(shortBrowserLang) {
                 console.log("No such document!");
             }
 
+            await getReviewText(shortBrowserLang);
+
             console.log('db_tr_ok');
         })
         .catch((error) => {
@@ -105,6 +109,34 @@ export async function translatePage(shortBrowserLang) {
         });
 }
 
+async function getReviewText(shortBrowserLang) {
+   // console.log('getReviewText');
+///${shortBrowserLang}/reviews
+
+    //reviews = { 'hr' : '' }
+    let i = 0;
+
+    const querySnapshot = await getDocs(collection(db, `/dictionary/hr/reviews`));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.id);
+    //   console.log(doc.data()['text']);
+
+    if(i == 0)
+      reviews = { ['hr'] : { [doc.id] : doc.data()['text'] } }; 
+    else
+      reviews['hr'][doc.id] = doc.data()['text']
+
+      i++;
+    });
+
+    //ovo bi trebalo u scripts.js
+    console.log(reviews['hr'])
+    console.log(reviews['hr']['NC HYPNOTIC'])
+    console.log(reviews['hr']['TEST CLUB'])
+   // console.log(querySnapshot);
+
+}
 
 
 

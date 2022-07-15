@@ -1,5 +1,9 @@
+//Start local server
+//  http-server -c-1
+
 import { Location } from './classes/location.js';
-import { tryWrite, translatePage } from './firebase/init.js';
+import { tryWrite, translatePage, reviews } from './firebase/init.js';
+
 
 //prijevod
 
@@ -14,7 +18,7 @@ if(shortBrowserLang != "en" && shortBrowserLang != "de" && shortBrowserLang != "
 }
 
 translatePage(shortBrowserLang)
-
+//console.log(reviews)
 
 window.addEventListener('DOMContentLoaded', event => {
 
