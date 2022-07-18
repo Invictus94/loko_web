@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
 import { doc, getDoc, getFirestore, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js";
-
-export let reviews = {}
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -66,10 +65,12 @@ export function tryWrite(drzava) {
         });
 }
 
-export function translatePage(shortBrowserLang) {
+export async function translatePage(shortBrowserLang) {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, 'admin@loko.com', '260294')
-        .then(async (userCredential) => {
+    let reviews = {}
+
+    await signInWithEmailAndPassword(auth, 'admin@loko.com', '260294')
+        .then(async () => {
 
             // Signed in 
 
@@ -88,14 +89,12 @@ export function translatePage(shortBrowserLang) {
 
                 });
 
-                document.getElementById('page-top').classList.remove("d-none");
-
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
             }
 
-            await getReviewText(shortBrowserLang);
+            reviews = await getReviews(shortBrowserLang);
 
             console.log('db_tr_ok');
         })
@@ -105,37 +104,37 @@ export function translatePage(shortBrowserLang) {
 
             console.log(errorCode);
             console.log(errorMessage);
-
         });
-}
 
-async function getReviewText(shortBrowserLang) {
-   // console.log('getReviewText');
-///${shortBrowserLang}/reviews
+        return reviews;
+    }
 
-    //reviews = { 'hr' : '' }
-    let i = 0;
+async function getReviews(shortBrowserLang) {
+    let reviews = {}
 
-    const querySnapshot = await getDocs(collection(db, `/dictionary/hr/reviews`));
+   const storage = getStorage();
+
+    const querySnapshot = await getDocs(collection(db, `/dictionary/${shortBrowserLang}/reviews`));
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id);
-    //   console.log(doc.data()['text']);
 
-    if(i == 0)
-      reviews = { ['hr'] : { [doc.id] : doc.data()['text'] } }; 
-    else
-      reviews['hr'][doc.id] = doc.data()['text']
+    getDownloadURL(ref(storage, `Avatars/${doc.data()['img']}`))
+    .then((url) => {
 
-      i++;
+      reviews[doc.id] = {
+        text: doc.data()['text'],
+        image: url,
+    }
+
+    })
+    .catch((error) => {
+      console.log('db_img_', error, '_', doc.id);
     });
 
-    //ovo bi trebalo u scripts.js
-    console.log(reviews['hr'])
-    console.log(reviews['hr']['NC HYPNOTIC'])
-    console.log(reviews['hr']['TEST CLUB'])
-   // console.log(querySnapshot);
+    });
 
+    console.log('db_rv_ok');
+
+    return reviews;
 }
 
 

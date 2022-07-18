@@ -1,9 +1,16 @@
 //Start local server
 //  http-server -c-1
 
+import { tryWrite, translatePage } from './firebase/init.js';
 import { Location } from './classes/location.js';
-import { tryWrite, translatePage, reviews } from './firebase/init.js';
+import { ReviewCard } from './classes/reviewCard.js';
 
+
+const firstReviewCard = new ReviewCard(1, document.getElementById("firstReviewCard"), 1);
+const secondReviewCard = new ReviewCard(2, document.getElementById("secondReviewCard"), 2);
+const thirdReviewCard = new ReviewCard(3, document.getElementById("thirdReviewCard"), 3);
+let screenWidth = 0;
+let hasReviews = false;
 
 //prijevod
 
@@ -11,14 +18,65 @@ document.documentElement.lang = navigator.language || navigator.userLanguage;
 
 var shortBrowserLang = document.documentElement.lang.substr(0, 2);
 
-if(shortBrowserLang != "en" && shortBrowserLang != "de" && shortBrowserLang != "hr")
-{
+if (shortBrowserLang != "en" && shortBrowserLang != "de" && shortBrowserLang != "hr") {
     document.documentElement.lang = "en";
     shortBrowserLang = "en"
 }
 
-translatePage(shortBrowserLang)
-//console.log(reviews)
+screenWidth = document.body.clientWidth;
+
+translatePage('hr').then(async (reviews) => {
+    ReviewCard.reviews = reviews;
+
+    await new Promise(r => setTimeout(r, 500));
+
+    if(Object.keys(ReviewCard.reviews).length == 0)
+        await new Promise(r => setTimeout(r, 500));
+
+    setTimeout(() => {
+        hasReviews = Object.keys(ReviewCard.reviews).length > 0;
+        shuffle();
+        setTimeout(() => {
+            document.getElementById("page-top").classList.remove("d-none");
+        }, 500);
+    }, 500);
+
+});
+
+if (window.addEventListener) {  // all browsers except IE before version 9
+    window.addEventListener("resize", () => {
+        if (document.body.clientWidth < 768 && screenWidth > 768) {
+            screenWidth = document.body.clientWidth;
+            firstReviewCard.move()
+            secondReviewCard.move()
+            thirdReviewCard.move()
+        }
+        else if (document.body.clientWidth > 768 && screenWidth < 768) {
+            screenWidth = document.body.clientWidth;
+            firstReviewCard.move()
+            secondReviewCard.move()
+            thirdReviewCard.move()
+        }
+    }, true);
+} else {
+    if (window.attachEvent) {   // IE before version 9
+        window.attachEvent("onresize", () => {
+            if (document.body.clientWidth < 768 && screenWidth > 768) {
+                screenWidth = document.body.clientWidth;
+                firstReviewCard.move()
+                secondReviewCard.move()
+                thirdReviewCard.move()
+            }
+            else if (document.body.clientWidth > 768 && screenWidth < 768) {
+                screenWidth = document.body.clientWidth;
+                firstReviewCard.move()
+                secondReviewCard.move()
+                thirdReviewCard.move()
+            }
+        });
+    }
+}
+
 
 window.addEventListener('DOMContentLoaded', event => {
 
@@ -33,7 +91,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
     const submitButton = document.getElementById("submitButton");
     submitButton.addEventListener('click', () => submitForm());
-    
+
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = mainDiv.querySelector('#mainNav');
     if (mainNav) {
@@ -97,7 +155,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
     //         });
     // }
-
 });
 
 function submitForm() {
@@ -113,7 +170,7 @@ function submitForm() {
         element.style.backgroundColor = 'orange';
 
         var result = sendMail(name, email, phone, message);
-        result.then( resultValue => {
+        result.then(resultValue => {
             if (resultValue == "OK") {
                 element.innerHTML = "Poslano!"
                 element.style.backgroundColor = 'green';
@@ -149,21 +206,32 @@ function feedbackModal() {
     var feedbackModal = document.getElementById("feedbackModal");
     var modalShade = document.getElementById("modalShade");
 
-    if(body.style.overflow == 'hidden')
-    {
+    if (body.style.overflow == 'hidden') {
         body.style.overflow = 'initial'
         feedbackModal.classList.add("d-none");
         modalShade.classList.add("d-none");
 
         const navbarToggler = document.body.querySelector('.navbar-toggler');
 
-        if(navbarToggler.getAttribute('aria-expanded') == "true")
+        if (navbarToggler.getAttribute('aria-expanded') == "true")
             navbarToggler.click();
     }
-    else
-    {
+    else {
         body.style.overflow = 'hidden'
         feedbackModal.classList.remove("d-none");
         modalShade.classList.remove("d-none");
     }
 }
+
+function shuffle(withTimeout = true) {
+
+    if (hasReviews) {
+        firstReviewCard.move()
+        secondReviewCard.move()
+        thirdReviewCard.move()
+    }
+
+    if (withTimeout)
+        setTimeout(shuffle, 2000);
+}
+
