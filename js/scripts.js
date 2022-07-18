@@ -231,6 +231,6 @@ function shuffle(withTimeout = true) {
     }
 
     if (withTimeout)
-        setTimeout(shuffle, 2000);
+        setTimeout(shuffle, 6500);
 }
 
