@@ -4589,7 +4589,13 @@ textarea.form-control-lg {
 
 .card-body {
   flex: 1 1 auto;
-  padding: 1rem 1rem;
+  padding: 8px 1rem;
+}
+
+@media (min-width: 768px) {
+  .card-body {
+    padding: 1rem 1rem;
+  }
 }
 
 .card-title {
@@ -4602,7 +4608,8 @@ textarea.form-control-lg {
 }
 
 .card-text:last-child {
-  margin-bottom: 0;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 .card-link + .card-link {
