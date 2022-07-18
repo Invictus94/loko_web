@@ -10,7 +10,6 @@ const firstReviewCard = new ReviewCard(1, document.getElementById("firstReviewCa
 const secondReviewCard = new ReviewCard(2, document.getElementById("secondReviewCard"), 2);
 const thirdReviewCard = new ReviewCard(3, document.getElementById("thirdReviewCard"), 3);
 let screenWidth = 0;
-let hasReviews = false;
 
 //prijevod
 
@@ -34,7 +33,6 @@ translatePage('hr').then(async (reviews) => {
         await new Promise(r => setTimeout(r, 500));
 
     setTimeout(() => {
-        hasReviews = Object.keys(ReviewCard.reviews).length > 0;
         shuffle();
         setTimeout(() => {
             document.getElementById("page-top").classList.remove("d-none");
@@ -225,7 +223,7 @@ function feedbackModal() {
 
 function shuffle(withTimeout = true) {
 
-    if (hasReviews) {
+    if (Object.keys(ReviewCard.reviews).length > 0) {
         firstReviewCard.move()
         secondReviewCard.move()
         thirdReviewCard.move()

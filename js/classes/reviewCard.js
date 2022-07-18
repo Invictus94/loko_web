@@ -23,7 +23,7 @@ export class ReviewCard {
             setTextMobile(this.element)
             fadeIn(this.element)
         }
-        else {
+        else if(Object.keys(ReviewCard.reviews).length > 3){
 
             this.element.className = 'col-md-4'
 
