@@ -27,7 +27,7 @@ screenWidth = document.body.clientWidth;
 translatePage('hr').then(async (reviews) => {
     ReviewCard.reviews = reviews;
 
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 900));
 
     if(Object.keys(ReviewCard.reviews).length == 0)
         await new Promise(r => setTimeout(r, 500));
@@ -36,6 +36,7 @@ translatePage('hr').then(async (reviews) => {
         shuffle();
         setTimeout(() => {
             document.getElementById("page-top").classList.remove("d-none");
+            document.getElementsByClassName("preloader_container")[0].remove();
         }, 500);
     }, 500);
 
